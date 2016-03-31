@@ -1,0 +1,104 @@
+package Midterm_Questions;
+
+import javax.swing.JOptionPane;
+
+public class Midterm_Q6
+{
+	public static void main(String[] args)
+	{
+
+		int counter = 0;
+		int timesRight = 0;
+		int guessedEven = 0;
+		int rollOdd = 0;
+
+		boolean loop = false;
+		do
+		{
+			// Variables to meet requirement
+			int diceGenerator = 1 + (int)(Math.random() * 600);
+			int diceRoll = 0;
+			boolean rollEven = true;
+			boolean guessEven = true;
+
+
+			// "Rolling the Dice"
+			switch (diceGenerator % 6)
+			{
+			case 0: diceRoll = 1; break;
+			case 1: diceRoll = 2; break;
+			case 2: diceRoll = 3; break;
+			case 3: diceRoll = 4; break;
+			case 4: diceRoll = 5; break;
+			case 5: diceRoll = 6; break;
+			}
+
+			// Odd or Even?
+			if ((diceRoll % 2) != 0)
+			{
+				rollEven = false;
+				rollOdd++;
+			}
+			else 
+				rollEven = true;
+
+			// Prompt User for Guess
+			String guess = JOptionPane.showInputDialog("Did you roll an EVEN number? Y/N");
+			guess = guess.toUpperCase();
+
+			// Did the User guess Even?
+			if (guess.equals("N"))
+				guessEven = false;
+			else
+			{
+				guessEven = true;
+				guessedEven++;
+			}
+			
+			//Counter
+			counter++;
+			
+
+			// is the User right?
+			if (((guessEven) && (rollEven)) || ((guessEven == false) && (rollEven == false)))
+			{
+				JOptionPane.showMessageDialog(null, "You are correct!");
+				timesRight++;
+			}
+			else
+				JOptionPane.showMessageDialog(null,  "You are incorrect!");
+			
+			double winningPercentage = 0;			
+			if (timesRight == 0)
+				winningPercentage = 0;
+			else
+				winningPercentage = timesRight / (counter * 1.0);
+			
+			double guessedEvenPercentage = 0;
+			if (guessedEven == 0)
+				guessedEvenPercentage = 0;
+			else
+				guessedEvenPercentage = guessedEven / (counter * 1.0);
+			
+			double rolledOddPercentage = 0;
+			if (rollOdd == 0)
+				rolledOddPercentage = 0;
+			else
+				rolledOddPercentage = rollOdd / (counter * 1.0);
+			
+			
+			
+
+			JOptionPane.showMessageDialog(null, String.format("Your Statistics\nTimes Played: %d\nWinning Percentage: %d%\nGuessed Even Percentage: %d%\nRolled Odd Percentage: %d%", counter, winningPercentage, guessedEvenPercentage, rolledOddPercentage));
+			
+			// Loop Option to User
+			if ((JOptionPane.showConfirmDialog (null, "Play again?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION))
+                loop = false;
+			else
+            	loop = true;
+
+		}
+		while (loop);
+
+	}
+}
