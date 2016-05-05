@@ -1,0 +1,55 @@
+package Q1;
+
+import javax.swing.JOptionPane;
+
+public class test_main 
+{
+	public static void main(String[] args)
+	{
+		boolean iLoop = true;
+		int totalDice;
+
+		while (iLoop == true)
+		{
+			dice userRoll = new dice();
+			totalDice = Integer.parseInt(JOptionPane.showInputDialog("# of Dice to be rolled: "));
+			
+			userRoll.Throw(totalDice);
+			
+			JOptionPane.showMessageDialog(null, String.format("\nYou rolled: %s \n The total of your roll: %d", userRoll.rolledThis(), userRoll.rollTotal()));
+		}
+	}
+}
+
+package Q1; // Question #1 Main
+import java.lang.Math;
+public class dice 
+{
+	int diceRoll;
+	int diceTotal = 0;
+	String numbersRolled = "";
+
+	public void Throw(int howManyDice)
+	{
+		for (int count = 0; count < howManyDice; count++)
+		{
+			diceRoll = 1 + (int)(Math.random() * 6);
+			
+			if (count > 0)
+				numbersRolled = numbersRolled + ", ";
+			
+			numbersRolled = numbersRolled + Integer.toString(diceRoll);
+			diceTotal = diceTotal + diceRoll;
+		}
+	}
+	
+	public int rollTotal()
+	{
+		return this.diceTotal;
+	}
+	
+	public String rolledThis()
+	{
+		return this.numbersRolled;
+	}
+}
