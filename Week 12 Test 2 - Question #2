@@ -1,0 +1,116 @@
+package Q2;
+
+import javax.swing.JOptionPane;
+/*
+ * 2.    Create an Automobile classes that allow the users to create an automobile with the following attributes
+a.    Year, Make, Model, Color, Name, Number of Gears
+b.    Operating cycle (1,2,3,4,5……) which can be incremented by user
+c.    Current gear, which is set to Operating cycle (max out at Number of Gears)
+d.    Current speed (current gear * 10)
+e.    Distance travel  (cumulative, each operating cycle’s distance = current speed/60)
+ */
+public class Automobile 
+{	
+	public static void main(String[] args) 
+	{
+		JOptionPane.showMessageDialog(null, "Enter the specifics of your Vehicle");
+		
+		int iYear = Integer.parseInt(JOptionPane.showInputDialog("Year: "));
+		String iMake = JOptionPane.showInputDialog("Make: ");
+		String iModel = JOptionPane.showInputDialog("Model: ");
+		String iColor = JOptionPane.showInputDialog("Color: ");
+		String iName = JOptionPane.showInputDialog("Name: ");
+		int iTransmission = Integer.parseInt(JOptionPane.showInputDialog("Transmission (# of Gears/Speeds): "));
+		
+		AutoConstructor userCar = new AutoConstructor(iYear, iMake, iModel, iColor, iName, iTransmission);
+		
+		boolean changeGears = false;
+		int Operation = 1;
+		
+
+		do
+		{
+			changeGears = false;
+			JOptionPane.showMessageDialog(null, userCar.AutoDescription());
+			JOptionPane.showMessageDialog(null, "Operating Cycle: " + Integer.toString(userCar.AutoOperating(Operation)) + "\nCurrent Gear: " + Integer.toString(userCar.AutoGear()) + "\nCurrent Speed: " + Integer.toString(userCar.AutoSpeed()) + "mph\nDistance Traveled Per Minute: " + Double.toString(userCar.AutoDistancePM()) + " miles");
+			//	JOptionPane.showMessageDialog(null, String.format("Operating Cycle: %d\nCurrent Gear: %d\nCurrent Speed: %d\nDistance Traveled Per Minute: %d", userCar.AutoOperating(Operation), userCar.AutoGear(), userCar.AutoSpeed(), userCar.AutoDistancePM()));
+			
+			int shiftGears = JOptionPane.showConfirmDialog(null, "Shift to the next gear?", "Gear Shifting", JOptionPane.YES_NO_OPTION);
+			if (shiftGears == JOptionPane.YES_OPTION)
+			{
+				changeGears = true;
+				Operation++;
+			}
+			
+		}	while ((changeGears == true) && (Operation <= iTransmission));
+		
+	}
+}
+
+package Q2;
+
+import javax.swing.JOptionPane;
+
+public class AutoConstructor 
+{
+	
+	private int Year;
+	private String Make;
+	private String Model;
+	private String Color;
+	private String Name;
+	private int Transmission;
+	private int OperatingCycle;
+	private int Gear;
+	private int Speed;
+	private double DistancePerMinute;
+	private String Description;
+	
+	public AutoConstructor (int y, String ma, String mo, String c, String n, int t)
+	{
+		Year = y;
+		Make = ma;
+		Model = mo;
+		Color = c;
+		Name = n;
+		Transmission = t;
+	}
+	
+	public int AutoOperating(int gear)
+	{
+		OperatingCycle = gear;
+		
+		return OperatingCycle;		
+	}
+	
+	public int AutoGear()
+	{
+		Gear = this.OperatingCycle;
+		
+		return Gear;		
+	}
+	
+	public int AutoSpeed()
+	{
+		Speed = this.OperatingCycle * 10;
+		
+		return Speed;		
+	}
+	
+	public double AutoDistancePM()
+	{
+		DistancePerMinute = this.Speed / 60.00;
+		
+		return DistancePerMinute;		
+	}
+	
+	
+	public String AutoDescription()
+	{
+		Description = Name + ": A " + Integer.toString(Year) + " ";
+		Description = Description + Color + " " +Make + " " + Model;
+		Description = Description + " with a " + Integer.toString(Transmission) + "-speed transmission";
+		
+		return Description;
+	}
+}
