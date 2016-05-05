@@ -1,0 +1,123 @@
+package DiceLabs;
+
+import java.lang.Math;
+
+public class Dice 
+{
+	int dice1 = 0;
+	int dice2 = 0;
+	int dice3 = 0;
+	int diceTotal;
+
+
+	public void Throw(int td)
+	{
+		if (td == 1)
+			dice1 = 1 + (int)(Math.random() * 6);
+
+		else if (td == 2)
+		{
+			dice1 = 1 + (int)(Math.random() * 6);
+			dice2 = 1 + (int)(Math.random() * 6);
+		}
+
+		else 
+		{
+			dice1 = 1 + (int)(Math.random() * 6);
+			dice2 = 1 + (int)(Math.random() * 6);
+			dice3 = 1 + (int)(Math.random() * 6);
+		}
+	}
+
+	public void Throw(int dices, int bounces)
+	{
+		if (dices == 1)
+		{
+			dice1 = 1 + (int)(Math.random() * 6);
+
+			if (bounces < 1)
+			{
+				for (int count = 0; count < bounces; count++)
+					dice1 = dice1 + 1 + (int)(Math.random() * 6);
+				dice1 = dice1 / bounces;
+			}
+		}
+
+		else if (dices == 2)
+		{
+			dice1 = 1 + (int)(Math.random() * 6);
+			dice2 = 1 + (int)(Math.random() * 6);
+
+			if (bounces < 1)
+			{
+				for (int count = 0; count < bounces; count++)
+				{
+					dice1 = dice1 + 1 + (int)(Math.random() * 6);
+					dice2 = dice2 + 1 + (int)(Math.random() * 6);
+				}
+				dice1 = dice1 / bounces;
+				dice2 = dice2 / bounces;
+			}
+		}
+
+		else 
+		{
+			dice1 = 1 + (int)(Math.random() * 6);
+			dice2 = 1 + (int)(Math.random() * 6);
+			dice3 = 1 + (int)(Math.random() * 6);
+			
+			for (int count = 0; count < bounces; count++)
+			{
+				dice1 = dice1 + 1 + (int)(Math.random() * 6);
+				dice2 = dice2 + 1 + (int)(Math.random() * 6);
+				dice3 = dice3 + 1 + (int)(Math.random() * 6);
+			}
+			dice1 = dice1 / bounces;
+			dice2 = dice2 / bounces;
+			dice3 = dice3 / bounces;
+		}
+	}
+
+	public int Value(int...is)
+	{
+		diceTotal = this.dice1 + this.dice2 + this.dice3;
+
+		return diceTotal;
+	}
+}
+
+package DiceLabs;
+
+import javax.swing.JOptionPane;
+
+public class DiceMain 
+{
+	public static void main(String[] args)
+	{
+		boolean userError = false;
+		boolean iLoop = true;
+		int totalDice;
+
+		while (iLoop == true)
+		{
+			do
+			{
+				userError = false;
+				totalDice = Integer.parseInt(JOptionPane.showInputDialog("Choose to roll 1, 2, or 3 dice: "));
+
+				if ((totalDice < 1) || (totalDice > 3))
+				{
+					JOptionPane.showMessageDialog(null,  "Invalid, try again...");
+					userError = true;
+				}
+			}while (userError == true);
+
+			Dice userRoll = new Dice();
+
+			userRoll.Throw(totalDice);
+
+			JOptionPane.showMessageDialog(null, String.format("\nYou rolled a %d, %d, %d, for a total of %d", userRoll.dice1, userRoll.dice2, userRoll.dice3, userRoll.Value()));
+
+		}
+	}
+}
