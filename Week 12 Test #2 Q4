@@ -1,0 +1,233 @@
+package Q4;
+
+public class Q4_Dice 
+{
+	int diceRoll;
+	int diceTotal = 0;
+	String numbersRolled = "";
+
+	public void Throw(int howManyDice)
+	{
+		for (int count = 0; count < howManyDice; count++)
+		{
+			diceRoll = 1 + (int)(Math.random() * 6);
+			
+			if (count > 0)
+				numbersRolled = numbersRolled + ", ";
+			
+			numbersRolled = numbersRolled + Integer.toString(diceRoll);
+			diceTotal = diceTotal + diceRoll;
+		}
+	}
+	
+	public int rollTotal()
+	{
+		return this.diceTotal;
+	}
+	
+	public String rolledThis()
+	{
+		return this.numbersRolled;
+	}
+}
+
+
+package Q4;
+
+public class Q4_Constructor 
+{
+
+	private int Year;
+	private String Make;
+	private String Model;
+	private String Color;
+	private String Name;
+	private int Transmission;
+	private int OperatingCycle;
+	private int Gear;
+	private int Speed;
+	private double DistancePerMinute;
+	private String Description;
+
+	public Q4_Constructor (int y, String ma, String mo, String c, String n, int t)
+	{
+		Year = y;
+		Make = ma;
+		Model = mo;
+		Color = c;
+		Name = n;
+		Transmission = t;
+	}
+
+	public int TransmissionCheck () 
+	{
+		return this.Transmission;
+	}
+
+	public int AutoGear(int g)
+	{
+		Gear = g;
+
+		return Gear;		
+	}
+
+	public int AutoSpeed()
+	{
+		Speed = this.Gear * 10;
+
+		return Speed;		
+	}
+
+	public double AutoDistancePM()
+	{
+		DistancePerMinute = this.Speed / 60.00;
+
+		return DistancePerMinute;		
+	}
+
+
+	public String AutoDescription()
+	{
+		Description = Name + ": A " + Integer.toString(Year) + " ";
+		Description = Description + Color + " " +Make + " " + Model;
+		Description = Description + " with a " + Integer.toString(Transmission) + "-speed transmission";
+
+		return Description;
+	}
+}
+
+package Q4;
+
+import javax.swing.JOptionPane;
+
+import Q3.AutoConstructorQ3;
+
+public class Q4_Main 
+{
+	public static void main(String[] args) 
+	{
+		Q4_Dice userRoll = new Q4_Dice();
+		userRoll.Throw(2);
+		int operationTotal = userRoll.rollTotal();
+
+
+		boolean userError = false;
+		int iYear;
+		String iMake;
+		String iModel;
+		String iColor;
+		String iName;
+		int iGear;
+		int iTransmission;
+		double totalDistance = 0.0;
+		double averageSpeed = 0.0;
+
+		Q4_Constructor Truck = new Q4_Constructor(1995, "Chevy", "Silverado", "Green", "Mater", 3);
+		Q4_Constructor Van = new Q4_Constructor (2004, "Chevy", "Odyssey", "Black", "SoccerMom", 4);
+		Q4_Constructor SportCar = new Q4_Constructor (2016, "Chevy", "Camaro", "Blue", "Lightning McQueen", 6);
+
+		boolean changeGears = false;
+		int Operation = 1;
+
+		JOptionPane.showMessageDialog(null, "Vehicle: Truck");
+		
+		for (int count = 1; count <= operationTotal; count++)
+		{
+			do
+			{
+				userError = false;
+				JOptionPane.showMessageDialog(null, "Operationg Cycle #" + Integer.toString(Operation));
+				iGear = Integer.parseInt(JOptionPane.showInputDialog("Current Gear: "));
+
+				if ((iGear < 0) || (iGear > Truck.TransmissionCheck()))
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Input - The highest gear available is " + Integer.toString(Truck.TransmissionCheck()));
+					userError = true;
+				}
+
+			} while (userError == true);
+
+			Truck.AutoGear(iGear);
+			averageSpeed = averageSpeed + Truck.AutoSpeed();
+			totalDistance = totalDistance + Truck.AutoDistancePM();
+			Operation++;
+		}
+
+		averageSpeed = averageSpeed / operationTotal;
+
+		JOptionPane.showMessageDialog(null, Truck.AutoDescription());
+		JOptionPane.showMessageDialog(null, "Operating Cycles: " + Integer.toString(operationTotal) + "\nAverage Speed: " + Double.toString(averageSpeed) + "mph\nDistance Traveled: " + Double.toString(totalDistance) + " miles");
+
+		userRoll.Throw(2);
+		operationTotal = userRoll.rollTotal();
+		
+		Operation = 1;
+
+		JOptionPane.showMessageDialog(null, "Vehicle: Van");
+		
+		for (int count = 1; count <= operationTotal; count++)
+		{
+			do
+			{
+				userError = false;
+				JOptionPane.showMessageDialog(null, "Operationg Cycle #" + Integer.toString(Operation));
+				iGear = Integer.parseInt(JOptionPane.showInputDialog("Current Gear: "));
+
+				if ((iGear < 0) || (iGear > Van.TransmissionCheck()))
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Input - The highest gear available is " + Integer.toString(Van.TransmissionCheck()));
+					userError = true;
+				}
+
+			} while (userError == true);
+
+			Van.AutoGear(iGear);
+			averageSpeed = averageSpeed + Van.AutoSpeed();
+			totalDistance = totalDistance + Van.AutoDistancePM();
+			Operation++;
+		}
+		
+		averageSpeed = averageSpeed / operationTotal;
+		
+		JOptionPane.showMessageDialog(null, Van.AutoDescription());
+		JOptionPane.showMessageDialog(null, "Operating Cycles: " + Integer.toString(operationTotal) + "\nAverage Speed: " + Double.toString(averageSpeed) + "mph\nDistance Traveled: " + Double.toString(totalDistance) + " miles");
+
+		
+		userRoll.Throw(2);
+		operationTotal = userRoll.rollTotal();
+		
+		Operation = 1;
+
+		JOptionPane.showMessageDialog(null, "Vehicle: SportCar");
+
+		for (int count = 1; count <= operationTotal; count++)
+		{
+			do
+			{
+				userError = false;
+				JOptionPane.showMessageDialog(null, "Operationg Cycle #" + Integer.toString(Operation));
+				iGear = Integer.parseInt(JOptionPane.showInputDialog("Current Gear: "));
+
+				if ((iGear < 0) || (iGear > SportCar.TransmissionCheck()))
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Input - The highest gear available is " + Integer.toString(SportCar.TransmissionCheck()));
+					userError = true;
+				}
+
+			} while (userError == true);
+
+			SportCar.AutoGear(iGear);
+			averageSpeed = averageSpeed + SportCar.AutoSpeed();
+			totalDistance = totalDistance + SportCar.AutoDistancePM();
+			Operation++;
+		}
+		
+		averageSpeed = averageSpeed / operationTotal;
+		
+		JOptionPane.showMessageDialog(null, SportCar.AutoDescription());
+		JOptionPane.showMessageDialog(null, "Operating Cycles: " + Integer.toString(operationTotal) + "\nAverage Speed: " + Double.toString(averageSpeed) + "mph\nDistance Traveled: " + Double.toString(totalDistance) + " miles");
+
+		
+	}
+}
+
