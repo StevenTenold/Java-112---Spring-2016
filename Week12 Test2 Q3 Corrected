@@ -1,0 +1,125 @@
+package Q3;
+
+import javax.swing.JOptionPane;
+
+public class AutomobileQ3 
+{
+
+	/*
+	 * 3.    Write a test program to test the Dice and Automobile classes.
+a.    Demonstrate use of constructor
+b.    Create 3 cars
+i.    Truck:  3 gears
+ii.    Van: 4 gears
+iii.    Sport Car: 6 gears
+	 */
+	public static void main(String[] args) 
+	{
+
+		int iYear;
+		String iMake;
+		String iModel;
+		String iColor;
+		String iName;
+		int iTransmission;
+		
+		AutoConstructorQ3 Truck = new AutoConstructorQ3(1995, "Chevy", "Silverado", "Green", "Mater", 3);
+		AutoConstructorQ3 Van = new AutoConstructorQ3 (2004, "Chevy", "Odyssey", "Black", "SoccerMom", 4);
+		AutoConstructorQ3 SportCar = new AutoConstructorQ3 (2016, "Chevy", "Camaro", "Blue", "Lightning McQueen", 6);
+		
+		boolean changeGears = false;
+		int Operation = 1;
+		
+		
+
+		do
+		{
+			changeGears = false;
+			JOptionPane.showMessageDialog(null, Truck.AutoDescription());
+			JOptionPane.showMessageDialog(null, "Operating Cycle: " + Integer.toString(Truck.AutoOperating(Operation)) + "\nCurrent Gear: " + Integer.toString(Truck.AutoGear()) + "\nCurrent Speed: " + Integer.toString(Truck.AutoSpeed()) + "mph\nDistance Traveled Per Minute: " + Double.toString(Truck.AutoDistancePM()) + " miles");
+			//	JOptionPane.showMessageDialog(null, String.format("Operating Cycle: %d\nCurrent Gear: %d\nCurrent Speed: %d\nDistance Traveled Per Minute: %d", userCar.AutoOperating(Operation), userCar.AutoGear(), userCar.AutoSpeed(), userCar.AutoDistancePM()));
+			
+			int shiftGears = JOptionPane.showConfirmDialog(null, "Shift to the next gear?", "Gear Shifting", JOptionPane.YES_NO_OPTION);
+			if (shiftGears == JOptionPane.YES_OPTION)
+			{
+				changeGears = true;
+				Operation++;
+			}
+			
+		}	while ((changeGears == true) && (Operation <= Truck.TransmissionCheck()));
+		
+		
+	}
+
+package Q3;
+
+public class AutoConstructorQ3 {
+
+
+	private int Year;
+	private String Make;
+	private String Model;
+	private String Color;
+	private String Name;
+	private int Transmission;
+	private int OperatingCycle;
+	private int Gear;
+	private int Speed;
+	private double DistancePerMinute;
+	private String Description;
+	
+	public AutoConstructorQ3 (int y, String ma, String mo, String c, String n, int t)
+	{
+		Year = y;
+		Make = ma;
+		Model = mo;
+		Color = c;
+		Name = n;
+		Transmission = t;
+	}
+	
+	public int TransmissionCheck () 
+	{
+		return 0;
+	}
+	
+	public int AutoOperating(int gear)
+	{
+		OperatingCycle = gear;
+		
+		return OperatingCycle;		
+	}
+	
+	public int AutoGear()
+	{
+		Gear = this.OperatingCycle;
+		
+		return Gear;		
+	}
+	
+	public int AutoSpeed()
+	{
+		Speed = this.OperatingCycle * 10;
+		
+		return Speed;		
+	}
+	
+	public double AutoDistancePM()
+	{
+		DistancePerMinute = this.Speed / 60.00;
+		
+		return DistancePerMinute;		
+	}
+	
+	
+	public String AutoDescription()
+	{
+		Description = Name + ": A " + Integer.toString(Year) + " ";
+		Description = Description + Color + " " +Make + " " + Model;
+		Description = Description + " with a " + Integer.toString(Transmission) + "-speed transmission";
+		
+		return Description;
+	}
+}
+
+}
