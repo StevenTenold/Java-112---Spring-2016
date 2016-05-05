@@ -1,0 +1,55 @@
+package DiceLabs;
+import java.lang.Math;
+public class ThreeDice 
+{
+
+	diceNew dice1 = new diceNew();
+	diceNew dice2 = new diceNew();
+	diceNew dice3 = new diceNew();
+	int diceAvg;
+
+
+		public int Throw3()
+		{
+			diceAvg = (dice1.Throw() + dice2.Throw() + dice3.Throw()) / 3;
+			
+			return diceAvg;
+		}
+}
+
+package DiceLabs;
+import java.lang.Math;
+public class diceNew 
+{
+	int dice1 = 0;
+	int diceTotal;
+
+
+	public int Throw()
+	{
+	dice1 = 1 + (int)(Math.random() * 6);
+	
+	return dice1;
+	}
+
+
+	public void Throw(int dices, int bounces)
+	{
+		dice1 = 1 + (int)(Math.random() * 6);
+
+		if (bounces < 1)
+		{
+			for (int count = 0; count < bounces; count++)
+				dice1 = dice1 + 1 + (int)(Math.random() * 6);
+			dice1 = dice1 / bounces;
+		}
+	}
+
+
+	public int Value(int...is)
+	{
+		diceTotal = this.dice1;
+
+		return diceTotal;
+	}
+}
