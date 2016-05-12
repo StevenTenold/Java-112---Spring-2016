@@ -1,0 +1,71 @@
+package Lab3;
+import java.lang.Math;
+public class ThreeDice 
+{
+
+	int dice1 = 0;
+	int dice2;
+	int diceTotal = 0;
+	double diceAverage;
+	String diceRolled;
+
+	public int Throw()
+	{
+		dice1 = 1 + (int)(Math.random() * 6);
+		return dice1;
+	}
+	public double Throw(int dices)
+	{
+
+		for (int count = 0; count < dices; count++)
+		{
+			dice1 = 1 + (int)(Math.random() * 6);
+			diceTotal = diceTotal + dice1;
+
+			if (count < 1)
+				diceRolled = String.format("You Rolled:\n%d", dice1);
+			else
+				diceRolled = diceRolled + ", " + Integer.toString(dice1);
+		}
+		diceAverage = (diceTotal / (dices * 1.0));
+		diceAverage = Math.round(diceAverage * 1000.0) / 1000.0;
+
+		return diceAverage;
+	}
+
+	public double Value()
+	{
+		diceAverage = Math.round(this.diceAverage * 100.0) / 100.0;
+		return diceAverage;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.diceRolled;
+	}
+
+}
+
+package Lab3;
+import javax.swing.JOptionPane;
+public class Main 
+{
+	public static void main(String[] args)
+	{
+		boolean iLoop = true;
+		int totalDice;
+
+		while (iLoop == true)
+		{
+			totalDice = Integer.parseInt(JOptionPane.showInputDialog("Enter # of dice to roll: "));
+			ThreeDice userRoll = new ThreeDice();
+			userRoll.Throw(totalDice);
+
+			JOptionPane.showMessageDialog(null, ("\nYou rolled an average of " + Double.toString(userRoll.Throw(totalDice))));
+			JOptionPane.showMessageDialog(null, userRoll.toString());
+		}
+	}
+}
+
+
